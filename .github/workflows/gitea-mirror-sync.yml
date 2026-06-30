@@ -1,24 +1,8 @@
 name: Sync Gitea mirror
-# Near-realtime: trigger Gitea's pull-mirror sync on every push instead of waiting
-# for the 8h schedule. Runs on this repo's in-cluster self-hosted runner.
 on:
   push:
   workflow_dispatch:
-concurrency:
-  group: gitea-mirror-sync
-  cancel-in-progress: true
 jobs:
   mirror-sync:
-    runs-on: file-uploads
-    steps:
-      - name: Trigger Gitea pull-mirror sync
-        env:
-          GITEA_TOKEN: ${{ secrets.GITEA_MIRROR_TOKEN }}
-        run: |
-          set -euo pipefail
-          repo="${GITHUB_REPOSITORY##*/}"
-          curl -fsS -k -X POST \
-            -H "Authorization: token ${GITEA_TOKEN}" \
-            -H "Accept: application/json" \
-            "https://gitea-http.gitea.svc.cluster.local:3000/api/v1/repos/jstewart/${repo}/mirror-sync"
-          echo "Requested Gitea mirror-sync for jstewart/${repo}."
+    uses: thecrimsontint/.github/.github/workflows/gitea-mirror-sync.yml@main
+    secrets: inherit
