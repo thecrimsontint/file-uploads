@@ -1,8 +1,8 @@
 <!-- gitea-cutover -->
-# Gitea cutover runbook — `jstewart612/file-uploads`
+# Gitea cutover runbook — `thecrimsontint/file-uploads`
 
 This repository is mirrored **read-only** from GitHub into the homelab Gitea at
-`https://gitea.thecrimsontint.com/jstewart/file-uploads`. **GitHub is the source of
+`https://gitea.thecrimsontint.com/thecrimsontint/file-uploads`. **GitHub is the source of
 truth**; Gitea pulls every 8h, and Gitea Actions do **not** run on a mirror.
 
 CI parity is staged: `.github/workflows/` runs on GitHub today; an identical
@@ -17,12 +17,12 @@ present in Gitea and runs the moment Gitea becomes this repo's live host.
    mirror" to convert it to a regular repo.) The Gitea copy becomes writable.
 2. **Repoint your working clone:**
    ```sh
-   git remote set-url origin git@gitea.thecrimsontint.com:jstewart/file-uploads.git
-   git remote add github  git@github.com:jstewart612/file-uploads.git   # keep GitHub as a backup
+   git remote set-url origin git@gitea.thecrimsontint.com:thecrimsontint/file-uploads.git
+   git remote add github  git@github.com:thecrimsontint/file-uploads.git   # keep GitHub as a backup
    ```
 3. **Push-mirror Gitea -> GitHub** (so GitHub stays a live backup): Gitea repo ->
    Settings -> Mirror Settings -> add a **push** mirror to
-   `https://github.com/jstewart612/file-uploads.git` with a GitHub PAT.
+   `https://github.com/thecrimsontint/file-uploads.git` with a GitHub PAT.
 4. **Enable Actions + recreate secrets:** Gitea repo -> Settings -> Actions ->
    enable; recreate any `secrets`/`vars` the workflows use under
    Settings -> Actions -> Secrets. The shared runner (`gitea-act-runner`) is
